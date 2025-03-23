@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Jarvis Voice Assistant</h1>
+        <button id="speakBtn">🎙 Speak</button>
+        <button id="stopBtn">⏹ Stop</button>
+        <p id="output">Click "Speak" and give a command.</p>
+    </div>
+
+    <script>
+        document.getElementById("speakBtn").addEventListener("click", function() {
+            fetch("/speak", { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("output").innerText = "Command: " + data.command + "\nResponse: " + data.response;
+                });
+        });
+
+        document.getElementById("stopBtn").addEventListener("click", function() {
+            document.getElementById("output").innerText = "Jarvis stopped.";
+        });
+    </script>
+</body>
+</html>
